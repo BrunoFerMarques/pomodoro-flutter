@@ -30,3 +30,27 @@ jobs:
 
       - name: Rodar testes
         run: flutter test
+
+  backend:
+    name: Backend (API)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Checar tipos
+        run: npm run typecheck
+
+      - name: Rodar testes
+        run: npm test
